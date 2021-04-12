@@ -46,6 +46,8 @@ class Product extends Component {
     };
   }
   componentDidMount() {
+    window.scrollTo(0, 0);
+
     const { keyword } = this.props.match.params;
     const pageNumber = this.props.match.params.pageNumber || 1;
     this.props.dispatch(listProducts(keyword, pageNumber));
@@ -67,11 +69,17 @@ class Product extends Component {
         <Container>
           {!keyword && <h2>Latest products</h2>}
           {keyword && (
-            <Link to='/'>
-              <h6 style={{ marginTop: 140, marginBottom: 10, color: "blue" }}>
-                Go Back And Search Again
-              </h6>
-            </Link>
+            <>
+              {" "}
+              <Link to='/'>
+                <h6 style={{ marginTop: 140, marginBottom: 10, color: "blue" }}>
+                  Go Back And Search Again
+                </h6>
+              </Link>
+              <p style={{ opacity: 0.6, fontSize: 10 }}>
+                Search keyword is not working here
+              </p>
+            </>
           )}
           {loading ? (
             <Loader />
@@ -82,34 +90,42 @@ class Product extends Component {
               <Row className='pb-5 mb-5'>
                 {!(products === undefined) && (
                   <>
-                    {products.map((i) => {
+                    {products.map((i, index) => {
                       return (
-                        <Col sm={12} md={6} lg={3} xl={3}>
-                          <Card className='my-3' style={{ border: "none" }}>
-                            <Card.Img
-                              fluid={true}
-                              alt='Card image'
-                              as={Image}
-                              variant='top'
-                              src={i.image}
-                            />
-                            <Card.Body>
-                              <Link to={`/product/${i._id}`}>
-                                <Card.Title as='div'>
-                                  <strong
-                                    style={{ fontSize: 14, fontWeight: 500 }}>
-                                    {i.name}
-                                  </strong>
-                                </Card.Title>
-                              </Link>
-                              <Rating
-                                value={i.rating}
-                                text={`${i.numReviews} reviews`}
-                              />
-                              <Card.Text as='h5'>${i.price}</Card.Text>
-                            </Card.Body>
-                          </Card>
-                        </Col>
+                        <>
+                          {!(i.image === "/images/sample.jpeg") && (
+                            <Col key={index} sm={12} md={6} lg={3} xl={3}>
+                              <Card className='my-3' style={{ border: "none" }}>
+                                <Card.Img
+                                  fluid={true}
+                                  alt='Card image'
+                                  as={Image}
+                                  variant='top'
+                                  src={i.image}
+                                />
+
+                                <Card.Body>
+                                  <Link to={`/product/${i._id}`}>
+                                    <Card.Title as='div'>
+                                      <strong
+                                        style={{
+                                          fontSize: 14,
+                                          fontWeight: 500,
+                                        }}>
+                                        {i.image}
+                                      </strong>
+                                    </Card.Title>
+                                  </Link>
+                                  <Rating
+                                    value={i.rating}
+                                    text={`${i.numReviews} reviews`}
+                                  />
+                                  <Card.Text as='h5'>${i.price}</Card.Text>
+                                </Card.Body>
+                              </Card>
+                            </Col>
+                          )}
+                        </>
                       );
                     })}
                   </>

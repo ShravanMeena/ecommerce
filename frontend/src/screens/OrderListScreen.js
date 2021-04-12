@@ -18,6 +18,8 @@ export default function OrderListScreen({ history }) {
   //   const { success: successDelete } = userDelete;
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     if (userInfo && userInfo.isAdmin) {
       dispatch(listOrders());
     } else {

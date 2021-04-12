@@ -29,9 +29,11 @@ class ProductDetails extends Component {
       qty: 1,
       rating: 1,
       comment: "",
+      comment_error: "",
     };
   }
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.props.dispatch(listProductDetails(this.props.match.params.id));
   }
 
@@ -42,6 +44,9 @@ class ProductDetails extends Component {
   };
 
   submitHandler = (e) => {
+    if (!this.state.comment) {
+      return;
+    }
     this.props.dispatch(
       createProductReview(this.props.match.params.id, {
         rating: this.state.rating,
@@ -50,7 +55,7 @@ class ProductDetails extends Component {
     );
     setTimeout(() => {
       window.location.reload();
-    }, 100);
+    }, 10);
   };
   render() {
     const { loading, error, product } = this.props.getProductDetailsData;
@@ -182,10 +187,13 @@ class ProductDetails extends Component {
                             onChange={(e) =>
                               this.setState({ comment: e.target.value })
                             }></Form.Control>
-                          <Form.Text className='text-muted'>
+                          <Form.Text
+                            className='text-muted'
+                            style={{ color: "red" }}>
                             One user is only add one review !!!
                           </Form.Text>
                           <Button
+                            disabled={!this.state.comment}
                             type='button'
                             className='my-2'
                             variant='primary'

@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import { Form, Button, Row, Col, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import FormContainer from "../component/FormContainer";
-import { login } from "../actions/userActions";
+// import { login } from "../actions/userActions";
 import { connect } from "react-redux";
 import Loader from "../component/Loader";
 import Error from "../component/common/Error";
+import axios from "axios";
 
 class SignScreen extends Component {
   constructor() {
@@ -14,36 +15,67 @@ class SignScreen extends Component {
       email: "",
       password: "",
       error: false,
+      loader: false,
     };
   }
 
-  submitHandler = (e) => {
+  submitHandler = async (e) => {
+    this.setState({
+      loader: true,
+    });
+    e.preventDefault();
     const { email, password } = this.state;
     if (!email && !password) {
       this.setState({
         error: true,
+        loader: false,
       });
       return;
     }
-    e.preventDefault();
-    this.props.dispatch(login(email, password));
+    // this.props.dispatch(login(email, password));
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    await axios
+      .post("/api/users/login", { email, password }, config)
+      .then((data) => {
+        this.setState({
+          error: false,
+          loader: false,
+        });
+
+        localStorage.setItem("userInfo", JSON.stringify(data.data));
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 1);
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({
+          loader: false,
+          error: true,
+        });
+      });
   };
 
   componentDidMount() {
+    window.scrollTo(0, 0);
+
     if (this.props.getLoginInfoData.userInfo) {
       this.props.history.push("/");
     }
   }
   render() {
-    const { loading, error, userInfo } = this.props.getLoginInfoData;
-    const redirect = this.props.location.search
-      ? this.props.location.search.split("=")
-      : "/";
     return (
       <FormContainer>
         <h2>Login</h2>
         {this.state.error && (
-          <Error variant='danger' message='Email Or Password Wrong!' />
+          <Error variant='danger' message='Email or password wrong!' />
         )}
         <Form>
           <Form.Group controlId='formBasicEmail'>
@@ -69,10 +101,11 @@ class SignScreen extends Component {
             />
           </Form.Group>
 
-          {loading ? (
+          {this.state.loader ? (
             <Loader />
           ) : (
             <Button
+              disabled={!this.state.password || !this.state.email}
               variant='primary'
               type='submit'
               onClick={this.submitHandler}>
@@ -83,11 +116,7 @@ class SignScreen extends Component {
 
         <Row className='py-4 justify-content-md-center'>
           <Col>
-            New customer{" "}
-            <Link
-              to={redirect ? `/register?redirect=${redirect}` : "/register"}>
-              Regiser
-            </Link>
+            New customer <Link to='/register'>Register</Link>
           </Col>
         </Row>
       </FormContainer>

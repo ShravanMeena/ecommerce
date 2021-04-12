@@ -22,16 +22,18 @@ class PaymentAddress extends Component {
     this.props.history.push("/placeorder");
   };
 
-  //   componentDidMount() {
-  //     const paymentAddress = this.props.getcartData;
-  //     if (paymentAddress) {
-  //       this.setState({
-  //         paymentMethod: paymentAddress.paymentMethod,
-  //       });
-  //     } else {
-  //       return;
-  //     }
-  //   }
+  componentDidMount() {
+    window.scrollTo(0, 0);
+
+    // const paymentAddress = this.props.getcartData;
+    // if (paymentAddress) {
+    //   this.setState({
+    //     paymentMethod: paymentAddress.paymentMethod,
+    //   });
+    // } else {
+    //   return;
+    // }
+  }
   render() {
     return (
       <FormContainer>

@@ -25,6 +25,8 @@ export default function UserListScreen({ history }) {
   const { success: successCreate, product: createdProduct } = productCreate;
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     dispatch({ type: PRODUCT_CREATE_RESET });
     if (!userInfo.isAdmin) {
       history.push("/");

@@ -28,6 +28,8 @@ class ShipingAddress extends Component {
   };
 
   componentDidMount() {
+    window.scrollTo(0, 0);
+
     const shippingAddress = this.props.getcartData.shippingAddress;
     if (shippingAddress) {
       this.setState({

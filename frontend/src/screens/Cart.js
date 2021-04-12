@@ -20,6 +20,8 @@ class Cart extends Component {
 
   // }
   componentDidMount() {
+    window.scrollTo(0, 0);
+
     const productId = this.props.match.params.id;
     const qty = this.props.location.search
       ? Number(this.props.location.search.split("=")[1])

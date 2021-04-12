@@ -17,6 +17,7 @@ export default function UserListScreen({ history }) {
   const { success: successDelete } = userDelete;
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (userInfo && userInfo.isAdmin) {
       dispatch(listUsers());
     } else {

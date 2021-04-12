@@ -25,6 +25,11 @@ class PlaceOrder extends Component {
       itemsPrice: "",
     };
   }
+
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   placeOrderHandler = () => {
     const cart = this.props.getCartData;
     const { taxPrice, shippingPrice, totalPrice, itemsPrice } = this.state;
@@ -88,7 +93,6 @@ class PlaceOrder extends Component {
 
   render() {
     const cart = this.props.getCartData;
-
     const { itemsPrice, shippingPrice, taxPrice, totalPrice } = this.state;
     if (!cart.cartItems) {
       return <Loader />;
@@ -182,12 +186,18 @@ class PlaceOrder extends Component {
 
                 <ListGroup.Item>
                   <Button
+                    disabled={this.props.getLoginInfoData.userInfo.isAdmin}
                     type='button'
                     className='btn-block'
                     disabled={cart.cartItems.length === 0}
                     onClick={() => this.placeOrderHandler()}>
                     Place Order
                   </Button>
+                  {this.props.getLoginInfoData.userInfo.isAdmin && (
+                    <label style={{ opacity: 0.8, fontSize: 12 }}>
+                      You are not able to buy your own product
+                    </label>
+                  )}
                 </ListGroup.Item>
               </ListGroup>
             </Card>

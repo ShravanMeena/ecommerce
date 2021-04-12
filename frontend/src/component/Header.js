@@ -17,7 +17,7 @@ import { Route } from "react-router-dom";
 class Header extends Component {
   logout = () => {
     this.props.dispatch(logout());
-    this.props.history.push("/");
+    this.props.history.push("/login");
   };
 
   render() {

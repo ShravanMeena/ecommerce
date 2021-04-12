@@ -5,9 +5,7 @@ export default class Loader extends Component {
   render() {
     return (
       <div className='d-flex justify-content-center py-5'>
-        <Spinner animation='border' role='status'>
-          <span className='sr-only'>Loading...</span>
-        </Spinner>
+        <Spinner animation='border' role='status'></Spinner>
       </div>
     );
   }

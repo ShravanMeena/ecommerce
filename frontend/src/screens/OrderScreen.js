@@ -31,6 +31,8 @@ class OrderScreen extends Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0, 0);
+
     const addPaypalScript = async () => {
       const { data: clientId } = await axios.get(`/api/config/paypal`);
 
@@ -104,6 +106,7 @@ class OrderScreen extends Component {
     if (!this.props.getLoginInfoData.userInfo) {
       return <Redirect to='/login' />;
     }
+
     const order = this.state.data;
 
     const user = this.props.getLoginInfoData;
@@ -211,7 +214,7 @@ class OrderScreen extends Component {
                     <Col>${order.totalPrice}</Col>
                   </Row>
                 </ListGroup.Item>
-                {!order.isPaid && (
+                {!order.isPaid && !user.userInfo.isAdmin && (
                   <ListGroup.Item>
                     {!this.state.sdkReady ? (
                       <Loader />

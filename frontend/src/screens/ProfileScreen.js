@@ -21,6 +21,8 @@ class ProfileScreen extends Component {
     };
   }
   componentDidMount() {
+    window.scrollTo(0, 0);
+
     const token = this.props.getLoginInfoData.userInfo.token;
     const config = {
       headers: {
