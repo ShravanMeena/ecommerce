@@ -1,9 +1,13 @@
-# ecommerce
+
+### Watch youtube short video for save time
+# [Click here](https://bit.ly/34uptcz)
+
+## ecommerce
 🎈 Fullstack MERN Ecommerce Application
 
-# MERN Ecommerce
+## MERN Ecommerce
 
-## Description
+### Description
 
 An ecommerce store built with MERN stack, and utilizes third party API's. This ecommerce store enable three main different flows or implementations:
 
